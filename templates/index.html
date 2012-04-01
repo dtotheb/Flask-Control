@@ -2,6 +2,10 @@
 <title>Flask Control</title>
 
 <body>
+<div id="navbar">
+    <a href="{{ url_for('index') }}">status</a>
+    <a href="{{ url_for('remount') }}">remount</a>
+</div>
 {% block body %}
 {% endblock %}
 </body>
