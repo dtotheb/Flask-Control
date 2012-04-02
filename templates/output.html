@@ -1,17 +1,22 @@
 {% extends "index.html" %}
 {%block body %}
-<pre>
-{{ output }}
-</pre>
 
-{% for line in lines %}
-	{% if 'miniplex' in line %}
-	<div style="color:green">{{line}}</div>
-	{% elif 'root' in line %}
-	<div style="color:red">{{line}}</div>
-	{% else %}
-	<div style="color:black">{{ line}}</div>
-	{% endif %}
-{% endfor %}
+{% if output %}
+	<pre>{{ output }}</pre>
+{% endif %}
+
+
+{% if lines %}
+	{% for line in lines %}
+		{% if uname in line %}
+		<div style="color:green">
+		{% elif 'root' in line %}
+		<div style="color:red">
+		{% else %}
+		<div style="color:black">
+		{% endif %}
+		{{ line }}</div>
+	{% endfor %}
+{% endif %}
 
 {% endblock %}

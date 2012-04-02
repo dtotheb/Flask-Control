@@ -1,13 +1,14 @@
 from flask import Flask, render_template, redirect, url_for, request
 import subprocess
 app = Flask(__name__)
+USERNAME = 'miniplex'
 
 
 @app.route("/")
 def index():
     out = subprocess.check_output('ls -l ~/shares/', shell=True)
     lines = out.split("\n")
-    return render_template('output.html', output=out, lines=lines)
+    return render_template('output.html', lines=lines, uname=USERNAME)
 
 @app.route("/touch")
 def touch():
@@ -21,7 +22,7 @@ def touch():
 @app.route("/remount")
 def remount():
     out = "output:\n"
-    out += subprocess.check_output(['./remount.sh', '&'], stderr=subprocess.STDOUT)
+    out += subprocess.check_output(['./remount.sh', USERNAME, '&'], stderr=subprocess.STDOUT)
     return render_template('output.html', output=out)
 
 if __name__ == "__main__":
