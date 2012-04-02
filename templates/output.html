@@ -4,4 +4,14 @@
 {{ output }}
 </pre>
 
+{% for line in lines %}
+	{% if 'miniplex' in line %}
+	<div style="color:green">{{line}}</div>
+	{% elif 'root' in line %}
+	<div style="color:red">{{line}}</div>
+	{% else %}
+	<div style="color:black">{{ line}}</div>
+	{% endif %}
+{% endfor %}
+
 {% endblock %}

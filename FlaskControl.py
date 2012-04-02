@@ -6,7 +6,8 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     out = subprocess.check_output('ls -l ~/shares/', shell=True)
-    return render_template('output.html', output=out)
+    lines = out.split("\n")
+    return render_template('output.html', output=out, lines=lines)
 
 @app.route("/touch")
 def touch():
@@ -20,10 +21,9 @@ def touch():
 @app.route("/remount")
 def remount():
     out = "output:\n"
-    #out += subprocess.check_output(['automount', '-vcu'], stderr=subprocess.STDOUT)
-    out += subprocess.check_output(['./remount.sh'], stderr=subprocess.STDOUT)
+    out += subprocess.check_output(['./remount.sh', '&'], stderr=subprocess.STDOUT)
     return render_template('output.html', output=out)
 
 if __name__ == "__main__":
     app.debug = True
-    app.run()
+    app.run(host="0.0.0.0")
