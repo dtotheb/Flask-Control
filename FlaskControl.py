@@ -25,6 +25,25 @@ def remount():
     out += subprocess.check_output(['./remount.sh', USERNAME, '&'], stderr=subprocess.STDOUT)
     return render_template('output.html', output=out)
 
+@app.route("/procs")
+def procs():
+    pname = request.args.get('p', '')
+    procs = []
+
+    out = subprocess.check_output(['ps -ef'], shell=True)
+    lines = out.split("\n")
+    headers = lines[0]
+
+    if pname != '':
+        for l in lines[1:]:
+            if pname in l:
+                procs.append(l)
+    else:
+        procs.extend(lines[1:])
+
+    return render_template('procs.html', procs=procs, headers=headers)
+
+
 if __name__ == "__main__":
     app.debug = True
     app.run(host="0.0.0.0")

@@ -7,9 +7,10 @@
 
 
 {% if lines %}
+	<div style="font: monospace">
 	{% for line in lines %}
 		{% if uname in line %}
-		<div style="color:green">
+		<div style="color:green;">
 		{% elif 'root' in line %}
 		<div style="color:red">
 		{% else %}
@@ -17,6 +18,7 @@
 		{% endif %}
 		{{ line }}</div>
 	{% endfor %}
+</div>
 {% endif %}
 
 {% endblock %}

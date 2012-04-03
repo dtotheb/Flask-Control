@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{%block body %}
+
+{% if output %}
+	<pre>{{ output }}</pre>
+{% endif %}
+
+{% if procs %}
+	<table>
+	<tr> 
+	{% for h in headers.split() %}
+		<th>{{h}}</th>
+	{% endfor %}
+	</tr>
+	{% for proc in procs %}
+		<tr>
+		{% for p in proc.split() %}
+		<td>{{ p }}</td>
+		{% endfor %}
+		</tr>
+		{% endfor %}
+	</table>
+{% endif %}
+
+{% endblock %}
