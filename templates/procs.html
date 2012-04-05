@@ -8,14 +8,14 @@
 {% if procs %}
 	<table>
 	<tr> 
-	{% for h in headers.split() %}
+	{% for h in headers %}
 		<th>{{h}}</th>
 	{% endfor %}
 	</tr>
 	{% for proc in procs %}
 		<tr>
-		{% for p in proc.split() %}
-		<td>{{ p }}</td>
+		{% for h in headers %}
+		<td>{{ proc[h] }}</td>
 		{% endfor %}
 		</tr>
 		{% endfor %}

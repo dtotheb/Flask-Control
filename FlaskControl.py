@@ -32,16 +32,32 @@ def procs():
 
     out = subprocess.check_output(['ps -ef'], shell=True)
     lines = out.split("\n")
-    headers = lines[0]
+    headers = lines[0].split()
 
-    if pname != '':
-        for l in lines[1:]:
-            if pname in l:
-                procs.append(l)
-    else:
-        procs.extend(lines[1:])
+
+    for l in lines[1:]:
+        if pname != '' and pname in l:
+            procs.append(splitproc(l,headers))
+        elif pname == '':
+            procs.append(splitproc(l,headers))
+
+    
 
     return render_template('procs.html', procs=procs, headers=headers)
+
+
+def splitproc(input, headers):
+    """
+    Takes a line of output from ps & column headers
+    Returns a dict using the headers as keys
+    """
+    vals = input.split(None,len(headers)-1)
+    output = {}
+
+    for v,h in enumerate(headers):
+        output[h] = vals[v]
+
+    return output
 
 
 if __name__ == "__main__":
