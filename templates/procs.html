@@ -15,7 +15,12 @@
 	{% for proc in procs %}
 		<tr>
 		{% for h in headers %}
-		<td>{{ proc[h] }}</td>
+			{% if h == 'PID' %}
+				<td><a href="{{ url_for('kill', pid=proc[h] ) }}">{{ proc[h] }}</a></td>
+			{% else %}
+				<td>{{ proc[h] }}</td>
+			{% endif %}
+		
 		{% endfor %}
 		</tr>
 		{% endfor %}

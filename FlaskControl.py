@@ -6,27 +6,37 @@ USERNAME = 'miniplex'
 
 @app.route("/")
 def index():
+    """
+    Index view that displays the ls output of the shares dir
+    """
     out = subprocess.check_output('ls -l ~/shares/', shell=True)
     lines = out.split("\n")
-    return render_template('output.html', lines=lines, uname=USERNAME)
-
-@app.route("/touch")
-def touch():
-    fname = request.args.get('f', '')
-    if fname != '':
-        subprocess.check_output(['touch', fname])
-        return redirect(url_for('index'))
-    else:
-        return render_template('output.html',output="f = nothing")
+    return render_template('shares.html', lines=lines, uname=USERNAME)
 
 @app.route("/remount")
 def remount():
+    """
+    Triggers a remount of the shares
+    """
     out = "output:\n"
     out += subprocess.check_output(['./remount.sh', USERNAME, '&'], stderr=subprocess.STDOUT)
-    return render_template('output.html', output=out)
+    return render_template('shares.html', output=out)
+
+@app.route("/kill")
+def kill():
+    """
+    Kills a pid 
+    """
+    pid = request.args.get('pid')
+    subprocess.call(["kill", pid])
+    return redirect(url_for('procs',p=pid))
 
 @app.route("/procs")
 def procs():
+    """
+    Displays the output from ps -ef
+    -p filters the output 
+    """
     pname = request.args.get('p', '')
     procs = []
 
@@ -55,7 +65,10 @@ def splitproc(input, headers):
     output = {}
 
     for v,h in enumerate(headers):
-        output[h] = vals[v]
+        try:
+            output[h] = vals[v]
+        except IndexError:
+            pass
 
     return output
 
