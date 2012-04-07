@@ -1,0 +1,17 @@
+Simple Control panel for my mac mini mediacenter 
+Displays the status of samba shares mounted with autofs
+and allows them to be remounted.
+
+Also displays ps output for various services like:
+Plex
+Sabnzb+
+SickBeard
+
+Setup/Start Instructions
+
+Change the username constant in FlaskControl.py to name of the main account
+This is used to remount the shares under the right user account
+
+Also needs to be run as root ie.
+
+sudo python FlaskControl.py

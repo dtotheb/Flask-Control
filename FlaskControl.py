@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request
 import subprocess
 app = Flask(__name__)
-USERNAME = 'miniplex'
+USERNAME = 'dan'
 
 
 @app.route("/")
@@ -62,13 +62,7 @@ def splitproc(input, headers):
     Returns a dict using the headers as keys
     """
     vals = input.split(None,len(headers)-1)
-    output = {}
-
-    for v,h in enumerate(headers):
-        try:
-            output[h] = vals[v]
-        except IndexError:
-            pass
+    output = dict(zip(headers,vals))
 
     return output
 
